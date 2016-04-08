@@ -10,6 +10,12 @@ use Symfony\Component\Routing\Matcher\UrlMatcher;
 
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 
+use Symfony\Component\EventDispatcher\EventDispatcher;
+
+$dispatcher = new EventDispatcher();
+$dispatcher->addSubscriber(new Acme\ContentLengthListener());
+$dispatcher->addSubscriber(new Acme\GoogleListener());
+
 $request = Request::createFromGlobals();
 $routes = include __DIR__ . '/../src/routes.php';
 
@@ -17,7 +23,7 @@ $context = new RequestContext();
 $matcher = new UrlMatcher($routes, $context);
 $resolver = new ControllerResolver();
 
-$framework = new Acme\Framework($matcher, $resolver);
+$framework = new Acme\Framework($dispatcher, $matcher, $resolver);
 $response = $framework->handle($request);
 
 $response->send();
