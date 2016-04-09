@@ -9,6 +9,7 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
+use Symfony\Component\HttpKernel;
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -24,9 +25,9 @@ $matcher = new UrlMatcher($routes, $context);
 $resolver = new ControllerResolver();
 
 $framework = new Acme\Framework($dispatcher, $matcher, $resolver);
-$response = $framework->handle($request);
+$framework = new HttpKernel\HttpCache\HttpCache($framework, new HttpKernel\HttpCache\Store(__DIR__ . '/../cache'));
 
-$response->send();
+$framework->handle($request)->send();
 
 function render_template(Request $request) 
 {
