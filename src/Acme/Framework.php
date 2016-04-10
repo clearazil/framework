@@ -17,5 +17,4 @@ use Acme\ResponseEvent;
 
 class Framework extends HttpKernel
 {
-
 }
