@@ -3,6 +3,6 @@
 return [
 
 	'env' 		=> getenv('APP_ENV'),
-	'debug' 	=> getenv('APP_DEBUG')
+	'debug' 	=> getenv('APP_DEBUG') == 'true' ? true : false
 
 ];
