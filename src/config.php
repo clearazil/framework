@@ -2,7 +2,7 @@
 
 return [
 
-	'env' 		=> 'production',
-	'debug' 	=> true
+	'env' 		=> getenv('APP_ENV'),
+	'debug' 	=> getenv('APP_DEBUG')
 
 ];
