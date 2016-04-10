@@ -6,13 +6,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GoogleListener implements EventSubscriberInterface
 {
-	public function onResponse(ResponseEvent $event)
+	public function onResponse(\Symfony\Component\HttpKernel\Event\FilterResponseEvent $event)
 	{
 		$response = $event->getResponse();
 
 		if($response->isRedirection()
 			|| ($response->headers->has('Content-Type') && strpos($response->headers->get('Content-Type'), 'html') == false)
 			|| $event->getRequest()->getRequestFormat() !== 'html'
+			|| !$event->isMasterRequest()
 		) {
 			return;
 		}
@@ -22,6 +23,6 @@ class GoogleListener implements EventSubscriberInterface
 
 	public static function getSubscribedEvents()
 	{
-		return ['response' => 'onResponse'];
+		return ['kernel.response' => 'onResponse'];
 	}
 }
