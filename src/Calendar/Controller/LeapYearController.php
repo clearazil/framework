@@ -4,9 +4,11 @@ namespace Calendar\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
+use Acme\Core\Controller;
+
 use Calendar\Model\LeapYear;
 
-class LeapYearController
+class LeapYearController extends Controller
 {
 	public function indexAction($year)
 	{
@@ -19,6 +21,6 @@ class LeapYearController
 
 		//$response->setTtl(10);
 
-		return $response;
+		return $this->view->render('index', ['leapYear' => $response]);
 	}
 }
